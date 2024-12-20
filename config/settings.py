@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 from dotenv import load_dotenv
 
 import os
@@ -9,13 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
+# Your secret key, don't give people
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True if os.getenv("DEBUG") == 'True' else False
 
 ALLOWED_HOSTS = ['*']
 
-
+# path from your module
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
+    'blog',
 ]
 
 MIDDLEWARE = [
