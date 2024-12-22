@@ -16,7 +16,7 @@ class Product(models.Model):
         blank=True,
         null=True,
         verbose_name="Фото продукта",
-        help_text="Загрзите фото продукта",
+        help_text="Загрузите фото продукта",
     )
     category = models.CharField(
         max_length=100, verbose_name="Категория", help_text="Введите категорию"
