@@ -1,14 +1,20 @@
 from pathlib import Path
+from dotenv import load_dotenv
+
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "catalog.settings")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-^%9a2l-#b5z%v#c5lx$!_q=wrc$j*6^i6$39$s117!!vdwwhx-'
+load_dotenv()
 
-DEBUG = True
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-ALLOWED_HOSTS = []
+DEBUG = True if os.getenv("DEBUG") == 'True' else False
 
+ALLOWED_HOSTS = ['*']
 
+# path from your module
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -16,7 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'newapp',
+    'catalog',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -50,13 +57,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+# Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("NAME"),
+        'USER': os.getenv("USER"),
+        'PASSWORD': os.getenv("PASSWORD"),
+        'HOST': os.getenv("HOST"),
+        'PORT': os.getenv("PORT"),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -85,6 +96,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = (BASE_DIR / 'static', )
+STATICFILES_DIRS = (BASE_DIR / 'static',)
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

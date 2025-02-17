@@ -1,0 +1,28 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card" style="width: 40 rem;">
+                <div class="card-body">
+                    {% if object %}
+                    <h4 class="card-title">Редактирование товара</h4>
+                    {% else %}
+                    <p class="card-text">Создание товара</p>
+                    {% endif %}
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    {% if object %}
+                    Сохранить
+                    {% else %}
+                    Создать
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
