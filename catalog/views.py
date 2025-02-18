@@ -8,11 +8,11 @@ from catalog.models import Product
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
 
-class HomeTemplateView(TemplateView):
+class HomeTemplateView(LoginRequiredMixin, TemplateView):
     template_name = 'catalog/home.html'
 
 
-class ContactTemplateView(TemplateView):
+class ContactTemplateView(LoginRequiredMixin, TemplateView):
     template_name = 'catalog/contacts.html'
 
 
