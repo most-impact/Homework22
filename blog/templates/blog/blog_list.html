@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% load my_tags %}
+{% block content %}
+   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">БЛОГ МАГАЗИНА</h1>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        {% for blog in object_list %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ blog.title}}</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title pricing-card-title">Описание</h2>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li class="text-center">{{ blog.content|truncatechars:100}}</li>
+                    </ul>
+                    <img src="{{blog.image | media_filter }}" class="img-fluid" style="height: 180px;">
+
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{% url 'blog:blog_detail' blog.pk %}" role="button">Перейти</a>
+                        <a class="btn btn-primary" href="{% url 'blog:blog_update' blog.pk %}" role="button">Редактировать</a>
+                        <a class="btn btn-danger" href="{% url 'blog:blog_delete' blog.pk %}" role="button">Удалить</a>
+                    </div>
+                    <h4 class="card-title pricing-card-title">Количество просмотров: {{ blog.number_views }}</h4>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-12 ">
+                <a class="btn btn-primary" href="{% url 'blog:blog_create' %}" role="button">Создать новый блог</a>
+    </div>
+</div>
+{% endblock %}
