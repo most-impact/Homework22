@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Blog(models.Model):
-    """заголовок,содержимое, превью (изображение), дата создания, признак публикации (булевое поле), количество просмотров."""
     title = models.CharField(
         max_length=150,
         verbose_name="Заголовок",
@@ -17,7 +16,7 @@ class Blog(models.Model):
         blank=True,
         null=True,
         verbose_name="Изображение",
-        help_text="Загрзите фото продукта",
+        help_text="Загрузите фото продукта",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

@@ -2,8 +2,6 @@ from django.urls import path
 from catalog.apps import CatalogConfig
 from catalog.views import (HomeTemplateView, ContactTemplateView, ProductDetailView, ProductListView, ProductCreateView,
                            ProductUpdateView, ProductDeleteView)
-from django.conf import settings
-from django.conf.urls.static import static
 
 app_name = CatalogConfig.name
 
