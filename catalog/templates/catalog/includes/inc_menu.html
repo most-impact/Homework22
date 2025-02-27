@@ -1,31 +1,47 @@
-<div class="collapse text-bg-dark" id="navbarHeader">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-8 col-md-7 py-4">
-          <h4>Главная</h4>
-          <p class="text-body-secondary">На этой страцние изображены все продукты</p>
+        <a class="navbar-brand" href="{% url 'catalog:home' %}">SkyStore</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'catalog:home' %}active{% endif %}"
+                       href="{% url 'catalog:home' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'catalog:product_list' %}active{% endif %}"
+                       href="{% url 'catalog:product_list' %}">Продукты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'catalog:contacts' %}active{% endif %}"
+                       href="{% url 'catalog:contacts' %}">Контакты</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'catalog:product_create' %}">Добавить продукт</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link">{{ user.email }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:logout' %}">Выход</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">Вход</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-        <div class="col-sm-4 offset-md-1 py-4">
-          <h4>Навигация</h4>
-          <ul class="list-unstyled">
-            <li><a href="{% url 'catalog:product_list' %}" class="text-white">Главная</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
-            {% else %}
-            <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
-            <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="container">
-      <a href="#" class="navbar-brand d-flex align-items-center">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </div>
+</nav>

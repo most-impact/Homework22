@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 
 from catalog.forms import ProductForm
-from models import User
+from users.models import User
 
 
 class UserRegisterForm(ProductForm, UserCreationForm):

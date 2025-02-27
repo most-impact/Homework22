@@ -1,9 +1,11 @@
-{% extends 'catalog/base.html' %}
-{% load my_tags %}
+{% extends 'catalog/product_list.html' %}
 
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
+        <h1 class="my-4">Продукты в категории "{{ category.name }}"</h1>
+        <p class="lead">{{ category.description }}</p>
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for product in products %}
             <div class="col">
@@ -38,10 +40,10 @@
             </div>
             {% empty %}
             <div class="col-12">
-                <p class="text-center">Нет доступных продуктов.</p>
+                <p class="text-center">В данной категории пока нет продуктов.</p>
             </div>
             {% endfor %}
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %} 

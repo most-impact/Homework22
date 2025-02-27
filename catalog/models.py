@@ -4,12 +4,6 @@ from django.core.validators import MaxValueValidator
 from users.models import User
 
 
-from django.db import models
-from django.core.validators import MaxValueValidator
-
-from users.models import User
-
-
 class Product(models.Model):
     name = models.CharField(
         max_length=100,
@@ -26,23 +20,22 @@ class Product(models.Model):
         verbose_name="Фото продукта",
         help_text="Загрзите фото продукта",
     )
-    category = models.CharField(
-        max_length=100, verbose_name="Категория", help_text="Введите категорию"
+    category = models.ForeignKey(
+        'Category',
+        on_delete=models.CASCADE,
+        verbose_name="Категория",
+        help_text="Выберите категорию"
     )
     price = models.IntegerField(
         default=0, validators=[MaxValueValidator(1000000)], verbose_name="Цена за продукт"
     )
-    created_at = models.DateField(
-        blank=True,
-        null=True,
+    created_at = models.DateTimeField(
+        auto_now_add=True,
         verbose_name="Дата создания",
-        help_text="Введите дату создания",
     )
-    updated_at = models.DateField(
-        blank=True,
-        null=True,
-        verbose_name="дата последнего изменения",
-        help_text="Введите дату последнего изменения",
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата последнего изменения",
     )
     views_counter = models.PositiveIntegerField(
         verbose_name="Счетчик просмотров",

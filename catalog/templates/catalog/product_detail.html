@@ -1,0 +1,33 @@
+{% extends 'catalog/base.html'%}
+{% load my_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                {% if object.image %}
+                    <img src="{{ object.image.url }}" class="card-img-top" alt="{{ object.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h1 class="card-title">{{ object.name }}</h1>
+                    <p class="card-text">{{ object.description }}</p>
+                    <p class="card-text"><strong>Цена:</strong> {{ object.price }} руб.</p>
+                    <p class="card-text"><strong>Категория:</strong> {{ object.category }}</p>
+                    <p class="card-text"><small class="text-muted">Просмотров: {{ object.views_counter }}</small></p>
+                    <p class="card-text"><small class="text-muted">Создано: {{ object.created_at|date:"d.m.Y H:i" }}</small></p>
+                    <p class="card-text"><small class="text-muted">Последнее обновление: {{ object.updated_at|date:"d.m.Y H:i" }}</small></p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Назад к списку</a>
+                        {% if user.is_authenticated and user == object.owner %}
+                            <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-secondary">Редактировать</a>
+                            <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
