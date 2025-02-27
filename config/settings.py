@@ -1,14 +1,20 @@
 from pathlib import Path
+from dotenv import load_dotenv
+
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "catalog.settings")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-^%9a2l-#b5z%v#c5lx$!_q=wrc$j*6^i6$39$s117!!vdwwhx-'
+load_dotenv()
 
-DEBUG = True
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-ALLOWED_HOSTS = []
+DEBUG = True if os.getenv("DEBUG") == 'True' else False
 
+ALLOWED_HOSTS = ['*']
 
+# path from your module
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -16,7 +22,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'newapp',
+
+    'catalog',
+    'blog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -50,13 +59,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -85,6 +94,38 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = (BASE_DIR / 'static', )
+STATICFILES_DIRS = (BASE_DIR / 'static',)
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = 'catalog:product_list'
+LOGOUT_REDIRECT_URL = 'catalog:product_list'
+
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", False) == 'True'
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", False) == 'True'
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+
+CACHE_ENABLED = False
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('LOCATION'),
+        }
+    }
